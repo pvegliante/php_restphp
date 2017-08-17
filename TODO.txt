@@ -1,0 +1,7 @@
+- read_all_catagories.php
+- read_catagory.php
+- update_category.php
+- create_category.php
+- delete_category.php
+
+objects/category.php
