@@ -17,13 +17,16 @@
   $db = $database->getConnection();
   $product = new Product($db);
 
-  $ins = '';
-  foreach($_POST['del_ids'] as $id) {
-    $ins .= '{$id},';
+  //get product id
+  $data = json_decode(file_get_contents("php:..input"));
+
+  //set product id to be deleted
+  $product->id = $data->id;
+
+  //delete the product
+  if($product->delete()) {
+    echo "Product was deleted.";
+  } else {
+    "Unable to delete object";
   }
-
-  $ins = trim($ins, ',');
-
-  //delete the products
-  echo $product->delete($ins) ? 'true' : 'false';
 }

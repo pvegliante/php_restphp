@@ -123,23 +123,24 @@
           }
       }
 
-      public function delete($ins) {
-        //create query to delete multiple records
-        $query = 'DELETE FROM products
-                  WHERE id
-                  IN (:ins)';
+      public function delete() {
+        //delete query
+        $query = "DELETE FROM " . $this->table_name . "WHERE id= ?";
+
+        //prepare query
         $stmt = $this->conn->prepare($query);
 
-        // sanitize the query
-        $ins = htmlspecialchars(strip_tags($ins));
+        //sanatize
+        $this->id=htmlspecialchars(strip_tags($this->id));
 
-        // bind parameter
-        $stmt->bindParam(':ins', $ins);
+        //bind id of record to DELETE
+        $stmt->bindParam(1, $this->id);
 
+        //execute query
         if($stmt->execute()) {
           return true;
         } else {
           return false;
-        }
+        }      
       }
     }

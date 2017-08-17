@@ -1,20 +1,23 @@
 <?php
 
   if($_POST) {
-    include_once '../config/core.php';
-    include_once '../config/database.php';
-    include_once '../objects/category.php';
+  include_once '../config/core.php';
 
-    $databse = new Database();
-    $db = $database->getConnection();
-    $category = new Category($db);
+  include_once '../config/database.php';
 
-    $ins = '';
-    foreach($_POST['del_ids'] as $id) {
-      $ins .= '{$id},';
-    }
+  include_once '../objects/category.php';
 
-    $ins = trim($ins, ',');
+  $database = new Database();
+  $db = $database->getConnection();
+  $product = new Category($db);
 
-    echo $category->delte() ? 'true' : 'false';
+  $data = json_decode(file_get_contents("php:..input"));
+
+  $product->id = $data->id;
+
+  if($category->delete()) {
+    echo "Category was deleted.";
+  } else {
+    "Unable to delete object";
   }
+}
